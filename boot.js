@@ -16,8 +16,6 @@ module.exports = function(cuk){
       fs.writeFileSync(jsonFile, '{}')
     } catch(e) {}
 
-  let views = ['views']
-
   return new Promise((resolve, reject) => {
     helper('core:bootConfig')(pkgId, 'global')
     .then(result => {
