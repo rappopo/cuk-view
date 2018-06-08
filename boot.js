@@ -25,13 +25,15 @@ module.exports = function(cuk){
         let pid = k === 'root' ? '' : k,
           keys = []
         _.forOwn(v, (v1, k1) => {
-//          if (_.isFunction(v1)) k1 += ' fn'
           let name = _.camelCase(`${pid}:${k1}`)
           keys.push(name)
           glb[name] = v1
         })
         pkg.trace('Global » Serve -> %s', keys.join(', '))
       })
+      const glbExt = require('./lib/make_global')(cuk, pkg.trace)
+      glb = helper('core:merge')(glb, glbExt)
+
       const filter = require('./lib/make_filter')(cuk, pkg.trace)
       app.use(loadNunjucks({
         opts: pkg.cfg.options,
