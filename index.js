@@ -5,6 +5,6 @@ module.exports = function(cuk) {
   return Promise.resolve({
     id: 'view',
     tag: 'boot',
-    level: 3
+    level: 15
   })
 }
