@@ -7,8 +7,7 @@ module.exports = function(cuk){
   const pkg = cuk.pkg[pkgId]
   const loadNunjucks = require('./lib/load_nunjuks')(cuk)
 
-  pkg.trace('Initializing...')
-  const cuksDir = path.join(cuk.dir.root, 'cuks', pkgId),
+  const cuksDir = path.join(cuk.dir.app, 'cuks', pkgId),
     jsonFile = path.join(cuksDir, 'global.json')
   fs.ensureDirSync(path.join(cuksDir, 'template'))
   if (!fs.existsSync(jsonFile))
@@ -20,21 +19,23 @@ module.exports = function(cuk){
     helper('core:bootConfig')(pkgId, 'global')
     .then(result => {
       let glb = {}
+      helper('core:bootTrace')('%A Loading globals...', null)
       _.forOwn(result, (v, k) => {
         if (_.isEmpty(v)) return
-        let pid = k === 'root' ? '' : k,
+        let pid = k === 'app' ? '' : k,
           keys = []
         _.forOwn(v, (v1, k1) => {
           let name = _.camelCase(`${pid}:${k1}`)
           keys.push(name)
           glb[name] = v1
         })
-        pkg.trace('Global » Serve -> %s', keys.join(', '))
+        helper('core:bootTrace')('%k Serve %K %s', null, null, keys.join(', '))
       })
-      const glbExt = require('./lib/make_global')(cuk, pkg.trace)
+      const glbExt = require('./lib/make_global')(cuk)
       glb = helper('core:merge')(glb, glbExt)
 
-      const filter = require('./lib/make_filter')(cuk, pkg.trace)
+      helper('core:bootTrace')('%A Loading filters...', null)
+      const filter = require('./lib/make_filter')(cuk)
       app.use(loadNunjucks({
         opts: pkg.cfg.options,
         filter: filter,
