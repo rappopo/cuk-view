@@ -29,7 +29,7 @@ module.exports = function(cuk){
           keys.push(name)
           glb[name] = v1
         })
-        helper('core:bootTrace')('%k Serve %K %s', null, null, keys.join(', '))
+        helper('core:bootTrace')('%k Enable %K %s', null, null, keys.join(', '))
       })
       const glbExt = require('./lib/make_global')(cuk)
       glb = helper('core:merge')(glb, glbExt)
@@ -40,8 +40,7 @@ module.exports = function(cuk){
         opts: pkg.cfg.options,
         filter: filter,
         global: glb,
-        extension: {},
-        ext: '.html'
+        extension: {}
       }))
       resolve(true)
     })
