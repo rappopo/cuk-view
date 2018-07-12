@@ -1,7 +1,7 @@
 'use string'
 
 module.exports = function(cuk) {
-  const { helper } = cuk.lib
+  const { helper } = cuk.pkg.core.lib
   const pkg = cuk.pkg.view
 
   return (ctx, env) => {

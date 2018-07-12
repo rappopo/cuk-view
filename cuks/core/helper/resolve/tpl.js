@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function(cuk) {
-  const { _, helper, path } = cuk.lib
+  const { _, helper, path } = cuk.pkg.core.lib
 
   return name => {
     if (name.indexOf(':') > -1) {
