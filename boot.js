@@ -19,7 +19,7 @@ module.exports = function(cuk){
     helper('core:bootConfig')(pkgId, 'global')
     .then(result => {
       let glb = {}
-      helper('core:bootTrace')('|  |- Loading globals...')
+      helper('core:trace')('|  |- Loading globals...')
       _.forOwn(result, (v, k) => {
         if (_.isEmpty(v)) return
         let pid = k === 'app' ? '' : k,
@@ -29,12 +29,12 @@ module.exports = function(cuk){
           keys.push(name)
           glb[name] = v1
         })
-        helper('core:bootTrace')('|  |  |- Enabled => %s', keys.join(', '))
+        helper('core:trace')('|  |  |- Enabled => %s', keys.join(', '))
       })
       const glbExt = require('./lib/make_global')(cuk)
       glb = helper('core:merge')(glb, glbExt)
 
-      helper('core:bootTrace')('|  |- Loading filters...')
+      helper('core:trace')('|  |- Loading filters...')
       const filter = require('./lib/make_filter')(cuk)
       const mw = loadNunjucks({
         opts: pkg.cfg.options,
