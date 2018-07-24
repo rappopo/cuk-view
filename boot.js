@@ -25,7 +25,8 @@ module.exports = function(cuk){
         let pid = k === 'app' ? '' : k,
           keys = []
         _.forOwn(v, (v1, k1) => {
-          let name = _.camelCase(`${pid}:${k1}`)
+//          let name = _.camelCase(`${pid}:${k1}`)
+          let name = _.camelCase(`${k}:${k1}`)
           keys.push(name)
           glb[name] = v1
         })

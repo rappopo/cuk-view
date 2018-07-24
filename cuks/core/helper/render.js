@@ -8,13 +8,13 @@ module.exports = function(cuk) {
     return async (view, context) => {
       try {
         context = helper('core:merge')(ctx.state, context)
-        view = helper('view:resolveRoute')(view, ctx._matchedRouteName) + '.html'
+        view = helper('view:resolveRoute')(view, ctx) + '.html'
         const body = await env.render(view, context)
         ctx.type = ctx.type || 'text/html'
         ctx.body = body
         return
       } catch (e) {
-        pkg.trace('Render error: %', e.message)
+        pkg.trace('Render error: %s', e.message)
       }
     }
   }

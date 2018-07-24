@@ -5,13 +5,13 @@ module.exports = function(cuk) {
   const pkg = cuk.pkg.view
 
   return (ctx, env) => {
-    return async (view, context) => {
+    return async (text, context) => {
       try {
         context = helper('core:merge')(ctx.state, context)
-        let result = await env.renderString(string, context)
+        let result = await env.renderString(text, context)
         return result
       } catch (e) {
-        pkg.trace('Render string error: %', e.message)
+        pkg.trace('Render string error: %s', e.message)
       }
     }
   }
