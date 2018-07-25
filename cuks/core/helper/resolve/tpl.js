@@ -13,6 +13,8 @@ module.exports = function(cuk) {
         name = path.join(pkg.dir, 'cuks', 'view', 'template', names[2], names[1])
       else
         name = path.join(pkg.dir, 'cuks', 'view', 'template', names[1])
+      const ext = path.extname(name)
+      if (_.isEmpty(ext)) name += '.njk'
     }
     return name
   }

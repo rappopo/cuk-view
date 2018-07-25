@@ -1,5 +1,9 @@
 {
   "common": {
+    "contextMerge": {
+      "state": false,
+      "session": false
+    },
     "options": {}
   }
 }
