@@ -16,37 +16,16 @@ module.exports = function(cuk){
     } catch(e) {}
 
   return new Promise((resolve, reject) => {
-    helper('core:bootConfig')(pkgId, 'global')
-    .then(result => {
-      let glb = {}
-      helper('core:trace')('|  |- Loading globals...')
-      _.forOwn(result, (v, k) => {
-        if (_.isEmpty(v)) return
-        let pid = k === 'app' ? '' : k,
-          keys = []
-        _.forOwn(v, (v1, k1) => {
-//          let name = _.camelCase(`${pid}:${k1}`)
-          let name = _.camelCase(`${k}:${k1}`)
-          keys.push(name)
-          glb[name] = v1
-        })
-        helper('core:trace')('|  |  |- Enabled => %s', keys.join(', '))
-      })
-      const glbExt = require('./lib/make_global')(cuk)
-      glb = helper('core:merge')(glb, glbExt)
-
-      helper('core:trace')('|  |- Loading filters...')
-      const filter = require('./lib/make_filter')(cuk)
-      const mw = loadNunjucks({
-        opts: pkg.cfg.options,
-        filter: filter,
-        global: glb,
-        extension: {}
-      })
-      app.use(mw)
-      resolve(true)
+    const glb = require('./lib/make_global')(cuk)
+    const filter = require('./lib/make_filter')(cuk)
+    const mw = loadNunjucks({
+      opts: pkg.cfg.options,
+      filter: filter,
+      global: glb,
+      extension: {}
     })
-    .catch(reject)
+    app.use(mw)
+    resolve(true)
   })
 
 }
