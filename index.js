@@ -1,7 +1,6 @@
 'use strict'
 
-module.exports = function(cuk) {
-  const { path } = cuk.pkg.core.lib
+module.exports = function (cuk) {
   return Promise.resolve({
     id: 'view',
     level: 25

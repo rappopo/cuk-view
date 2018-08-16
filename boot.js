@@ -1,19 +1,20 @@
 'use strict'
 
-module.exports = function(cuk){
+module.exports = function (cuk) {
   const pkgId = 'view'
-  const { _, fs, path, helper, debug } = cuk.pkg.core.lib
+  const { fs, path } = cuk.pkg.core.lib
   const { app } = cuk.pkg.http.lib
   const pkg = cuk.pkg[pkgId]
   const loadNunjucks = require('./lib/load_nunjuks')(cuk)
 
-  const cuksDir = path.join(cuk.dir.app, 'cuks', pkgId),
-    jsonFile = path.join(cuksDir, 'global.json')
+  const cuksDir = path.join(cuk.dir.app, 'cuks', pkgId)
+  const jsonFile = path.join(cuksDir, 'global.json')
   fs.ensureDirSync(path.join(cuksDir, 'template'))
-  if (!fs.existsSync(jsonFile))
+  if (!fs.existsSync(jsonFile)) {
     try {
       fs.writeFileSync(jsonFile, '{}')
-    } catch(e) {}
+    } catch (e) {}
+  }
 
   return new Promise((resolve, reject) => {
     const glb = require('./lib/make_global')(cuk)
@@ -27,5 +28,4 @@ module.exports = function(cuk){
     app.use(mw)
     resolve(true)
   })
-
 }

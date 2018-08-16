@@ -1,6 +1,6 @@
 'use string'
 
-module.exports = function(cuk) {
+module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
   const pkg = cuk.pkg.view
   const { app } = cuk.pkg.http.lib
